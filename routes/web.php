@@ -14,9 +14,7 @@ use Illuminate\Http\Request;
 |
 */
 Auth::routes(["register" => false, "forgot" => false, "reset" => false]);
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home');
 
 
 
