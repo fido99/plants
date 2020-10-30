@@ -1,0 +1,55 @@
+body,
+html {
+  margin: 0;
+}
+
+.wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.zag {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.update_from_page {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  min-height: 600px;
+  margin: 0 auto;
+}
+
+.form_item {
+  display: flex;
+  flex-direction: column;
+  min-height: 50px;
+  margin-top: 25px;
+}
+
+.title {
+  font-size: 28px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.text {
+  height: 35px;
+}
+
+.textarea {
+  min-height: 250px;
+}
+
+.submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error {
+  background: red;
+  font-size: 25px;
+}
+
