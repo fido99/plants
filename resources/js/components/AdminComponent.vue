@@ -43,6 +43,7 @@
    mounted() {
     bkLib.onDomLoaded(nicEditors.allTextAreas);
    },
+   
    data() {
     return {
      title: '',

@@ -2046,6 +2046,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     var _this = this;
@@ -2062,7 +2083,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      slides: []
+      slides: [],
+      text: '',
+      link: ''
     };
   },
   methods: {
@@ -2070,20 +2093,24 @@ __webpack_require__.r(__webpack_exports__);
       event.preventDefault();
       var csrf = document.querySelector('meta[name=csrf-token]').getAttribute('content');
       var headers = {
-        'X-CSRF-TOKEN': csrf
+        'X-CSRF-TOKEN': csrf,
+        'Content-Type': 'multipart/form-data'
       };
       var updataFomt = document.querySelector(".num".concat(id));
+      var file = updataFomt.file.files[0];
       var newText = updataFomt.text.value;
       var newLink = updataFomt.link.value;
       var data = new FormData();
       data.append('id', id);
       data.append('text', newText);
       data.append('link', newLink);
+      data.append('file', file);
       var url = '/api/adminSlider/updata';
       axios.post(url, data, headers).then(function (data) {
         console.log(data.data);
       });
       console.log(newText);
+      console.log(file);
     },
     drop: function drop(event, id) {
       var _this2 = this;
@@ -2100,7 +2127,23 @@ __webpack_require__.r(__webpack_exports__);
       axios.post(url, dataId, headers).then(function (data) {
         _this2.slides = data.data;
       });
-      console.log(id);
+    },
+    addSlide: function addSlide(event) {
+      event.preventDefault();
+      var formFile = document.querySelector('.add_slide_form').file.files[0];
+      var csrf = document.querySelector('meta[name=csrf-token]').getAttribute('content');
+      var headers = {
+        'X-CSRF-TOKEN': csrf,
+        'Content-Type': 'multipart/form-data'
+      };
+      var url = '/api/adminSlider/add';
+      var data = new FormData();
+      data.append('text', this.text);
+      data.append('link', this.link);
+      data.append('file', formFile);
+      axios.post(url, data, headers).then(function (data) {
+        console.log(data.data);
+      });
     }
   }
 });
@@ -41460,7 +41503,79 @@ var render = function() {
             ])
           ]
         )
-      })
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "wrapp_add_slide" }, [
+        _c("h2", { staticClass: "zag" }, [_vm._v("Добавить слайд")]),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            staticClass: "update_from_page add_slide_form",
+            attrs: { action: "", method: "POST" }
+          },
+          [
+            _c("div", { staticClass: "form_item" }, [
+              _c("span", { staticClass: "title" }, [_vm._v("text:")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.text,
+                    expression: "text"
+                  }
+                ],
+                attrs: { type: "text", name: "text" },
+                domProps: { value: _vm.text },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.text = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _vm._m(1),
+            _vm._v(" "),
+            _c("div", { staticClass: "form_item" }, [
+              _c("span", { staticClass: "title" }, [_vm._v("link:")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.link,
+                    expression: "link"
+                  }
+                ],
+                attrs: { type: "text", name: "link" },
+                domProps: { value: _vm.link },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.link = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form_item" }, [
+              _c("input", {
+                attrs: { type: "submit", value: "Добавить" },
+                on: { click: _vm.addSlide }
+              })
+            ])
+          ]
+        )
+      ])
     ],
     2
   )
@@ -41473,7 +41588,17 @@ var staticRenderFns = [
     return _c("div", { staticClass: "form_item" }, [
       _c("span", { staticClass: "title" }, [_vm._v("image:")]),
       _vm._v(" "),
-      _c("input", { attrs: { type: "file", name: "image" } })
+      _c("input", { attrs: { type: "file", name: "file" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form_item" }, [
+      _c("span", { staticClass: "title" }, [_vm._v("image:")]),
+      _vm._v(" "),
+      _c("input", { attrs: { type: "file", name: "file" } })
     ])
   }
 ]

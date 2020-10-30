@@ -58,6 +58,7 @@ Route::post('/adminSlider', function() {
 Route::post('/adminSlider/updata', function(Request $request) {
     $slide = Slider::find($request->input('id'));
     $slide->text = $request->input('text');
+    $slide->image = $request->file('file')->getClientOriginalName();
     $slide->link = $request->input('link');
     $slide->save();
 
@@ -70,4 +71,12 @@ Route::post('/adminSlider/delete', function(Request $request) {
 
     $data = Slider::all();
 	return response()->json($data);
+});
+
+Route::post('/adminSlider/add', function(Request $request) {
+    $slide = new Slider();
+    $slide->text = $request->input('text');
+    $slide->link = $request->input('link');
+    $slide->image = $request->file('file')->getClientOriginalName();
+    $slide->save(); 
 });
