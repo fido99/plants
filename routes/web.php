@@ -17,7 +17,7 @@ Auth::routes(["register" => false, "forgot" => false, "reset" => false]);
 Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home');
 
 
-Route::resource('/admin', 'App\Http\Controllers\AdminController');
+Route::get('/admin', 'App\Http\Controllers\AdminController@index');
 
 
 

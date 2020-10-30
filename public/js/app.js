@@ -1919,9 +1919,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    console.log('slider created');
+    var url = '/api/getData';
+    var csrf = document.querySelector('meta[name=csrf-token]').getAttribute('content');
+    axios.post(url, {}).then(function (data) {
+      console.log(data.data);
+    });
   },
   data: function data() {
     return {
@@ -41060,76 +41069,96 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "form",
-    {
-      attrs: {
-        action: "#",
-        enctype: "multipart/form-data",
-        name: "updata_form"
-      }
-    },
-    [
-      _c("input", { attrs: { type: "hidden", name: "_method", value: "PUT" } }),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.title,
-            expression: "title"
-          }
-        ],
-        attrs: { type: "text", name: "title", placeholder: "title" },
-        domProps: { value: _vm.title },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.title = $event.target.value
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.email,
-            expression: "email"
-          }
-        ],
-        attrs: { type: "email", name: "email", placeholder: "email" },
-        domProps: { value: _vm.email },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.email = $event.target.value
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c("input", {
-        ref: "file",
+  return _c("div", { staticClass: "wrapper" }, [
+    _c("h1", [_vm._v("Панель редактирования страницы")]),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
         attrs: {
-          type: "file",
-          name: "logo",
-          id: "file",
-          accept: ".jpg, .jpeg, .png",
-          multiple: ""
+          action: "#",
+          enctype: "multipart/form-data",
+          name: "updata_form"
         }
-      }),
-      _vm._v(" "),
-      _c("textarea", { attrs: { name: "footer_text" } }),
-      _vm._v(" "),
-      _c("input", { attrs: { type: "submit" }, on: { click: _vm.update } })
-    ]
-  )
+      },
+      [
+        _c("input", {
+          attrs: { type: "hidden", name: "_method", value: "PUT" }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.title,
+              expression: "title"
+            }
+          ],
+          attrs: {
+            type: "text",
+            name: "title",
+            placeholder: "title",
+            required: ""
+          },
+          domProps: { value: _vm.title },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.title = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.email,
+              expression: "email"
+            }
+          ],
+          attrs: {
+            type: "email",
+            name: "email",
+            placeholder: "email",
+            required: ""
+          },
+          domProps: { value: _vm.email },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.email = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          ref: "file",
+          attrs: {
+            type: "file",
+            name: "logo",
+            id: "file",
+            accept: ".jpg, .jpeg, .png",
+            multiple: ""
+          }
+        }),
+        _vm._v(" "),
+        _c("textarea", { attrs: { name: "footer_text", required: "" } }),
+        _vm._v(" "),
+        _c("input", { attrs: { type: "submit" }, on: { click: _vm.update } })
+      ]
+    ),
+    _vm._v(" "),
+    _c("a", { attrs: { href: "" } }, [_vm._v("Редактировать слайдер")]),
+    _vm._v(" "),
+    _c("a", { attrs: { href: "" } }, [_vm._v("Редактировать список растений")])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

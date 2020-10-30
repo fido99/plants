@@ -1,18 +1,28 @@
 <template>
- <form action="#" enctype="multipart/form-data" name="updata_form">
-  <input type="hidden" name="_method" value="PUT">
-  <input type="text" name="title" placeholder="title" v-model="title">
-  <input type="email" name="email" placeholder="email" v-model="email">
-  <input type="file" name="logo" id="file" accept=".jpg, .jpeg, .png" multiple ref="file">
-  <textarea name="footer_text"></textarea>
-  <input type="submit" v-on:click="update">
- </form>
+ <div class="wrapper">
+  <h1>Панель редактирования страницы</h1>
+  <form action="#" enctype="multipart/form-data" name="updata_form">
+   <input type="hidden" name="_method" value="PUT">
+   <input type="text" name="title" placeholder="title" v-model="title" required>
+   <input type="email" name="email" placeholder="email" v-model="email" required>
+   <input type="file" name="logo" id="file" accept=".jpg, .jpeg, .png" multiple ref="file">
+   <textarea name="footer_text" required></textarea>
+   <input type="submit" v-on:click="update">
+  </form>
+  <a href="">Редактировать слайдер</a>
+  <a href="">Редактировать список растений</a>
+</div>
 </template>
 
 <script>
  export default {
    mounted() {
-    console.log('slider created');
+   	let url = '/api/getData';
+   	let csrf = document.querySelector('meta[name=csrf-token]').getAttribute('content');
+    axios.post(url, {})
+     .then((data) => {
+      console.log(data.data);
+     })
    },
    data() {
     return {
