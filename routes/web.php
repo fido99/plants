@@ -18,6 +18,7 @@ Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home');
 
 
 Route::get('/admin', 'App\Http\Controllers\AdminController@index');
+Route::get('/adminSlider', 'App\Http\Controllers\AdminController@slider');
 
 
 

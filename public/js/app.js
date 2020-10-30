@@ -1943,6 +1943,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     bkLib.onDomLoaded(nicEditors.allTextAreas);
@@ -1950,12 +1955,22 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       title: '',
-      email: ''
+      email: '',
+      footerText: '',
+      isShow: false,
+      updateTrue: false,
+      updateFalse: false,
+      message: ''
     };
   },
   methods: {
     update: function update(event) {
+      var _this = this;
+
       event.preventDefault();
+      var footer_text_data = document.querySelector('.nicEdit-main').innerHTML;
+      this.footerText = footer_text_data;
+      console.log(footer_text_data);
       var url = '/api/updata';
       var csrf = document.querySelector('meta[name=csrf-token]').getAttribute('content');
       var headers = {
@@ -1966,12 +1981,126 @@ __webpack_require__.r(__webpack_exports__);
       data.append('file', this.$refs.file.files[0]);
       data.append('title', this.title);
       data.append('email', this.email);
+      data.append('footer_text', this.footerText);
       console.log(this.$refs.file.files[0]);
       axios.post(url, data, headers).then(function (data) {
         console.log(data.data);
+        _this.message = 'Данные обновлены';
+        _this.isShow = true;
+        _this.updateTrue = true;
+        _this.updateFalse = false;
+        setTimeout(function () {
+          return _this.isShow = !_this.isShow;
+        }, 2000);
       })["catch"](function (err) {
         console.log(err);
+        _this.message = 'Ошибка';
+        _this.isShow = true;
+        _this.updateFalse = true;
+        _this.updateTrue = false;
+        setTimeout(function () {
+          return _this.isShow = !_this.isShow;
+        }, 2000);
       });
+    }
+  },
+  watch: {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminSliderComponent.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AdminSliderComponent.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    var _this = this;
+
+    var csrf = document.querySelector('meta[name=csrf-token]').getAttribute('content');
+    var headers = {
+      'X-CSRF-TOKEN': csrf
+    };
+    var url = '/api/adminSlider';
+    axios.post(url, headers).then(function (data) {
+      console.log(data.data);
+      _this.slides = data.data;
+    });
+  },
+  data: function data() {
+    return {
+      slides: []
+    };
+  },
+  methods: {
+    updata: function updata(event, id) {
+      event.preventDefault();
+      var csrf = document.querySelector('meta[name=csrf-token]').getAttribute('content');
+      var headers = {
+        'X-CSRF-TOKEN': csrf
+      };
+      var updataFomt = document.querySelector(".num".concat(id));
+      var newText = updataFomt.text.value;
+      var newLink = updataFomt.link.value;
+      var data = new FormData();
+      data.append('id', id);
+      data.append('text', newText);
+      data.append('link', newLink);
+      var url = '/api/adminSlider/updata';
+      axios.post(url, data, headers).then(function (data) {
+        console.log(data.data);
+      });
+      console.log(newText);
+    },
+    drop: function drop(event, id) {
+      var _this2 = this;
+
+      event.preventDefault();
+      var csrf = document.querySelector('meta[name=csrf-token]').getAttribute('content');
+      var headers = {
+        'X-CSRF-TOKEN': csrf
+      };
+      var url = '/api/adminSlider/delete';
+      var dataId = new FormData();
+      dataId.append('id', id); // delete data
+
+      axios.post(url, dataId, headers).then(function (data) {
+        _this2.slides = data.data;
+      });
+      console.log(id);
     }
   }
 });
@@ -41089,6 +41218,14 @@ var render = function() {
       _vm._v("Панель редактирования страницы")
     ]),
     _vm._v(" "),
+    _c("a", { staticClass: "admin_link", attrs: { href: "/adminSlider" } }, [
+      _vm._v("Редактировать слайдер")
+    ]),
+    _vm._v(" "),
+    _c("a", { staticClass: "admin_link", attrs: { href: "" } }, [
+      _vm._v("Редактировать список растений")
+    ]),
+    _vm._v(" "),
     _c(
       "form",
       {
@@ -41183,7 +41320,33 @@ var render = function() {
           _c("span", { staticClass: "error" }, [_vm._v("error")])
         ]),
         _vm._v(" "),
-        _vm._m(0),
+        _c("div", { staticClass: "form_item form_textarea" }, [
+          _c("span", { staticClass: "title" }, [_vm._v("footer text:")]),
+          _vm._v(" "),
+          _c("textarea", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.footerText,
+                expression: "footerText"
+              }
+            ],
+            staticClass: "textarea",
+            attrs: { name: "footer_text", required: "" },
+            domProps: { value: _vm.footerText },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.footerText = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("span", { staticClass: "error" }, [_vm._v("error")])
+        ]),
         _vm._v(" "),
         _c("input", {
           staticClass: "form_item submit",
@@ -41193,25 +41356,124 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _c("a", { attrs: { href: "" } }, [_vm._v("Редактировать слайдер")]),
-    _vm._v(" "),
-    _c("a", { attrs: { href: "" } }, [_vm._v("Редактировать список растений")])
+    _vm.isShow
+      ? _c("div", { staticClass: "message" }, [
+          _c("div", {
+            staticClass: "message_updata",
+            class: {
+              error_updata: _vm.updateFalse,
+              true_update: _vm.updateTrue
+            },
+            domProps: { textContent: _vm._s(_vm.message) }
+          })
+        ])
+      : _vm._e()
   ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminSliderComponent.vue?vue&type=template&id=55f2c038&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AdminSliderComponent.vue?vue&type=template&id=55f2c038& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "wrapper" },
+    [
+      _c("h1", { staticClass: "zag" }, [_vm._v("Редактирование слайдера")]),
+      _vm._v(" "),
+      _vm._l(_vm.slides, function(slide) {
+        return _c(
+          "form",
+          {
+            staticClass: "update_from_page",
+            class: "num" + slide.id,
+            attrs: { action: "#", method: "POST" }
+          },
+          [
+            _c("input", {
+              attrs: { type: "hidden", name: "id" },
+              domProps: { value: slide.id }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "form_item" }, [
+              _c("span", { staticClass: "title" }, [_vm._v("text:")]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "text",
+                attrs: { type: "text", name: "text" },
+                domProps: { value: slide.text }
+              })
+            ]),
+            _vm._v(" "),
+            _vm._m(0, true),
+            _vm._v(" "),
+            _c("div", { staticClass: "form_item" }, [
+              _c("span", { staticClass: "title" }, [_vm._v("link:")]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "text",
+                attrs: { type: "text", name: "link" },
+                domProps: { value: slide.link }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form_item" }, [
+              _c("input", {
+                attrs: { type: "submit", value: "Обновить" },
+                on: {
+                  click: function($event) {
+                    return _vm.updata($event, slide.id)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form_item" }, [
+              _c(
+                "button",
+                {
+                  on: {
+                    click: function($event) {
+                      return _vm.drop($event, slide.id)
+                    }
+                  }
+                },
+                [_vm._v("Удалить")]
+              )
+            ])
+          ]
+        )
+      })
+    ],
+    2
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form_item form_textarea" }, [
-      _c("span", { staticClass: "title" }, [_vm._v("footer text:")]),
+    return _c("div", { staticClass: "form_item" }, [
+      _c("span", { staticClass: "title" }, [_vm._v("image:")]),
       _vm._v(" "),
-      _c("textarea", {
-        staticClass: "textarea",
-        attrs: { name: "footer_text", required: "" }
-      }),
-      _vm._v(" "),
-      _c("span", { staticClass: "error" }, [_vm._v("error")])
+      _c("input", { attrs: { type: "file", name: "image" } })
     ])
   }
 ]
@@ -53492,6 +53754,7 @@ __webpack_require__(/*! owl.carousel */ "./node_modules/owl.carousel/dist/owl.ca
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('slider-component', __webpack_require__(/*! ./components/SliderComponent.vue */ "./resources/js/components/SliderComponent.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('admin-component', __webpack_require__(/*! ./components/AdminComponent.vue */ "./resources/js/components/AdminComponent.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('admin-slider-component', __webpack_require__(/*! ./components/AdminSliderComponent.vue */ "./resources/js/components/AdminSliderComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -53618,6 +53881,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminComponent_vue_vue_type_template_id_a603f2ce___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminComponent_vue_vue_type_template_id_a603f2ce___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/AdminSliderComponent.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/AdminSliderComponent.vue ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AdminSliderComponent_vue_vue_type_template_id_55f2c038___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdminSliderComponent.vue?vue&type=template&id=55f2c038& */ "./resources/js/components/AdminSliderComponent.vue?vue&type=template&id=55f2c038&");
+/* harmony import */ var _AdminSliderComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminSliderComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/AdminSliderComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _AdminSliderComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AdminSliderComponent_vue_vue_type_template_id_55f2c038___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AdminSliderComponent_vue_vue_type_template_id_55f2c038___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/AdminSliderComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/AdminSliderComponent.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/AdminSliderComponent.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminSliderComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./AdminSliderComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminSliderComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminSliderComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/AdminSliderComponent.vue?vue&type=template&id=55f2c038&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/AdminSliderComponent.vue?vue&type=template&id=55f2c038& ***!
+  \*****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminSliderComponent_vue_vue_type_template_id_55f2c038___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./AdminSliderComponent.vue?vue&type=template&id=55f2c038& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminSliderComponent.vue?vue&type=template&id=55f2c038&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminSliderComponent_vue_vue_type_template_id_55f2c038___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminSliderComponent_vue_vue_type_template_id_55f2c038___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

@@ -17,6 +17,5 @@ class PlantsSeeder extends Seeder
     	$plants = new Plants();
         $plants->name = 'Пихта белая';
         $plants->save();
-
     }
 }

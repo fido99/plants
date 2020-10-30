@@ -46,9 +46,51 @@ body, html {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	background: #81E161;
 }
 
 .error {
 	background: red;
 	font-size: 25px;
+}
+
+.message {
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	display: flex;
+	justify-content: center;
+}
+
+.message_updata {
+	margin: 0 auto;
+	min-height: 60px;
+	max-width: 300px;
+	min-width: 280px;
+	background: rgba(129, 225, 97, .9);
+	text-align: center;
+	font-size: 35px;
+}
+
+
+.error_updata {
+	background: red !important;
+}
+
+.true_update {
+	background: rgb(129, 225, 97) !important;
+}
+
+.admin_link {
+	width: 300px;
+	height: 60px;
+	background: rgb(146, 255, 110);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: black;
+	margin: 10px auto;
+	font-size: 15px;
+	text-transform: uppercase;
 }

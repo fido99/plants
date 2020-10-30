@@ -18,4 +18,8 @@ class AdminController extends Controller
         return response()->json($data);
     }
 
+    public function slider() {
+    	return view('sliderAdmin');
+    }
+
 }
