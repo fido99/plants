@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Page;
 use App\Models\Slider;
+use App\Models\Plants;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,4 +80,23 @@ Route::post('/adminSlider/add', function(Request $request) {
     $slide->link = $request->input('link');
     $slide->image = $request->file('file')->getClientOriginalName();
     $slide->save(); 
+});
+
+
+// ********* plants routes ********* 
+Route::post('/admin/plants', function() {
+    $plants = Plants::all();
+    return Plants::all();     
+});
+
+Route::post('/admin/plants/delete/{id}', function($id) {
+	$deletePlant = Plants::find($id);
+	$deletePlant->delete();
+    return 'ok';
+});
+
+Route::post('/admin/plants/add', function(Request $request) {
+     $newPlant = new Plants();
+     $newPlant->name = $request->input('name');
+     $newPlant->save();
 });

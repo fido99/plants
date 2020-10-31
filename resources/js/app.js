@@ -27,6 +27,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('slider-component', require('./components/SliderComponent.vue').default);
 Vue.component('admin-component', require('./components/AdminComponent.vue').default);
 Vue.component('admin-slider-component', require('./components/AdminSliderComponent.vue').default);
+Vue.component('admin-plants-component', require('./components/AdminPlantsComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

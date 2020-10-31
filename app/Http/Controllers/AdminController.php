@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Page;
+use App\Models\Plants;
 
 class AdminController extends Controller
 {
@@ -20,6 +21,11 @@ class AdminController extends Controller
 
     public function slider() {
     	return view('sliderAdmin');
+    }
+
+    public function plants() {
+        $data = Plants::all();
+        return view('plantsAdmin', ['plants' => $data]);
     }
 
 }

@@ -2,7 +2,7 @@
  <div class="wrapper">
   <h1 class="zag">Панель редактирования страницы</h1>
   <a href="/adminSlider" class="admin_link">Редактировать слайдер</a>
-  <a href="" class="admin_link">Редактировать список растений</a>
+  <a href="/adminPlants" class="admin_link">Редактировать список растений</a>
   <form action="#" enctype="multipart/form-data" class="update_from_page">
    <input type="hidden" name="_method" value="PUT">
    <div class="form_item">
