@@ -28,6 +28,9 @@ Vue.component('slider-component', require('./components/SliderComponent.vue').de
 Vue.component('admin-component', require('./components/AdminComponent.vue').default);
 Vue.component('admin-slider-component', require('./components/AdminSliderComponent.vue').default);
 Vue.component('admin-plants-component', require('./components/AdminPlantsComponent.vue').default);
+Vue.component('header-component', require('./components/HeaderComponent.vue').default);
+Vue.component('search-component', require('./components/SearchComponent.vue').default);
+Vue.component('footer-component', require('./components/FooterComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -38,9 +41,26 @@ Vue.component('admin-plants-component', require('./components/AdminPlantsCompone
 $(document).ready(function() {
  $('.owl-carousel').owlCarousel({
   loop: true,
+  items: 1
  });
 });
 
 const app = new Vue({
  el: '#app',
+ data: {
+  isModal: false,
+  tel: ''
+ },
+ methods: {
+  send(event) {
+   event.preventDefault();
+   let url = '/api/phone/send';
+   let data = new FormData();
+   data.append('pahone', this.tel);
+   axios.get(url, data)
+    .then((data) => {
+     console.log(data.data);
+    });
+  }
+ }
 });

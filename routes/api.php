@@ -44,12 +44,16 @@ Route::post('/updata', function(Request $request) {
     return response()->json($request->all());
 });
 
-/*
-Route::post('/getData', function() {
+
+Route::get('/getPage', function() {
     $data = Page::all();
     return response()->json($data);	
 });
-*/
+
+Route::get('/phone/send', function(Request $request) {
+    return response()->json('ok');
+});
+
 
 Route::post('/adminSlider', function() {
     $data = Slider::all();
@@ -81,6 +85,7 @@ Route::post('/adminSlider/add', function(Request $request) {
     $slide->image = $request->file('file')->getClientOriginalName();
     $slide->save(); 
 });
+
 
 
 // ********* plants routes ********* 

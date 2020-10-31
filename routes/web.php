@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 |
 */
 Auth::routes(["register" => false, "forgot" => false, "reset" => false]);
-Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home');
+Route::get('/', 'App\Http\Controllers\HomeController@index');
 
 
 Route::get('/admin', 'App\Http\Controllers\AdminController@index');

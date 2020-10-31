@@ -1,0 +1,161 @@
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
+.wrapper {
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+header {
+	height: 160px;
+	background: #00595C;
+}
+
+ 
+
+.panel_header_top {
+	min-height: 100px;
+	max-width: 310px;
+	margin: 0 auto;
+	 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.email_block {
+	height: 30px;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.email_block a {
+	color: #fff;
+	text-decoration: none;
+}
+
+.logotype_block, .email_block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.line {
+	width: 1px;
+	height: 30px;
+	background: green;
+}
+
+.btn {
+	display: block;
+	margin: 0 auto;
+	border: none;
+	background: #5E9395;
+	width: 180px;
+	height: 50px;
+	font-weight: bold;
+	color: #fff;
+	cursor: pointer;
+}
+
+.slider {
+	background: red;
+	height: 500px;
+}
+
+.item {
+	width: 100%;
+	height: 500px;
+	background: black;
+}
+
+.search_zag {
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 25px;
+	font-weight: bold;
+}
+
+.form_search_block {
+	margin: 0 auto;
+	background: red;
+	max-width: 300px;
+}
+
+.text_input {
+	width: 100%;
+	height: 30px;
+	padding: 5px;
+	font-size: 20px;
+}
+
+.search_result {
+	max-width: 400px;
+	margin: 20px auto;
+}
+
+.search_result li {
+	font-size: 24px;
+	font-weight: bold;
+	text-transform: uppercase;
+	color: #00595C;
+}
+
+.modal_block {
+	position: fixed;
+	background: rgba(0, 155, 160, 0.4);
+	width: 200vh;
+	height: 100vh;
+	z-index: 100;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.send_tell_from {
+	width: 300px;
+	height: 350px;
+	background: #006568;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	position: relative;
+}
+
+.send_tell_from h3, .send_tell_from span {
+	color: #fff;
+}
+
+.send_tell_from h3 {
+    margin-top: 70px;
+    font-size: 25px;
+    text-transform: uppercase;
+}
+
+.hide {
+	padding: 0;
+	margin: 0;
+	font-size: 30px;
+	position: absolute;
+	top: 10px;
+	right: 20px;
+	cursor: pointer;
+}
+
+input.tel_area {
+	width: 90%;
+	height: 40px;
+}
+
+.send {
+	margin-bottom: 50px;
+	width: 90%;
+	height: 40px;
+	background: #63F07F;
+	border: none;
+    cursor: pointer;
+	font-weight: bold;
+}

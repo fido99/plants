@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Page;
+
 
 class HomeController extends Controller
 {
@@ -20,6 +22,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('welcome');
+        $title = Page::find(1)->values;
+       
+        return view('home', ['title' => $title]);
     }
 }
