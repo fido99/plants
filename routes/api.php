@@ -55,7 +55,7 @@ Route::get('/getPage', function() {
 
 Route::post('/phone/send', function(Request $request) {
     Mail::send(['text' => 'mail'], ['phone' => $request->input('phone')], function($message) {
-        $mail = Page::where('id', '2')->first()->values;
+        $mail = Page::where('attributes', 'email')->first()->values;
         $message->to($mail)->subject('test');
         $message->from('olegf5241@gmail.com', 'test');
     });
