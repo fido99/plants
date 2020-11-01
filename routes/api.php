@@ -25,22 +25,22 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/updata', function(Request $request) {
     if ($request->hasFile('file')) {
         $filename = Storage::put('/public/', $request->file('file'));
-        $logo = Page::find(3);
+        $logo = Page::where('attributes', 'logo')->first();
         $logo->values = basename($filename);
         $logo->save();
     }
  
 
-	$title = Page::find(1);
+	$title = Page::where('attributes', 'title')->first();
 	$title->values = $request->input('title');
 	$title->save();
 
-	$email = Page::find(2);
+	$email = Page::where('attributes', 'email')->first();
 	$email->values = $request->input('email');
 	$email->save();
 
 
-	$footer_text = Page::find(4);
+	$footer_text = Page::where('attributes', 'footer_text')->first();
 	$footer_text->values = $request->input('footer_text');
 	$footer_text->save();
 
@@ -75,10 +75,12 @@ Route::post('/adminSlider', function() {
 });
 
 Route::post('/adminSlider/updata', function(Request $request) {
-    $filename = Storage::putFile('/public/', $request->file('file'));
     $slide = Slider::find($request->input('id'));
+    if ($request->hasFile('file')) {
+        $filename = Storage::putFile('/public/', $request->file('file'));
+        $slide->image = basename($filename);
+    }
     $slide->text = $request->input('text');
-    $slide->image = basename($filename);
     $slide->link = $request->input('link');
     $slide->save();
 
@@ -100,6 +102,8 @@ Route::post('/adminSlider/add', function(Request $request) {
     $slide->link = $request->input('link');
     $slide->image = basename($filename);
     $slide->save(); 
+
+    return Slider::all();
 });
 
 

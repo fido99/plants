@@ -1,8 +1,9 @@
 <template>
  <div class="wrapper">
   <h1 class="zag">Редактирование слайдера</h1>
-  <form action="#" method="POST" v-for="slide in slides"  class="update_from_page" v-bind:class="'num' + slide.id">
+  <form action="#" method="POST" v-for="(slide, index) in slides"  class="update_from_page" v-bind:class="'num' + slide.id">
    <input type="hidden" name="id" v-bind:value="slide.id">
+   <h2>Слайд номер {{ index + 1 }}</h2>
    <div class="form_item">
     <span class="title">text:</span>
     <input type="text" name="text" v-bind:value="slide.text" class="text">
@@ -17,10 +18,10 @@
     <input type="text" name="link" v-bind:value="slide.link" class="text">
    </div>
    <div class="form_item">
-    <input type="submit" v-on:click="updata($event, slide.id)" value="Обновить">
+    <input type="submit" v-on:click="updata($event, slide.id)" value="Обновить слайд" class="add_slide">
    </div>
    <div class="form_item">
-    <button v-on:click="drop($event, slide.id)">Удалить</button>
+    <button v-on:click="drop($event, slide.id)" class="slide_delete" >Удалить слайд</button>
    </div>
   </form>
 
@@ -40,7 +41,7 @@
      <input type="text" name="link" v-model='link'>
     </div>
     <div class="form_item">
-     <input type="submit" value="Добавить" v-on:click="addSlide">
+     <input type="submit" value="Добавить" v-on:click="addSlide" class="add_slide">
     </div>
    </form>
   </div>
@@ -133,6 +134,7 @@
     axios.post(url, data, headers)
      .then((data) => {
       console.log(data.data);
+      this.slides = data.data;
      });
    }
   }

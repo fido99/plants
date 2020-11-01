@@ -2202,6 +2202,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     var _this = this;
@@ -2264,6 +2265,8 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     addSlide: function addSlide(event) {
+      var _this3 = this;
+
       event.preventDefault();
       var formFile = document.querySelector('.add_slide_form').file.files[0];
       var csrf = document.querySelector('meta[name=csrf-token]').getAttribute('content');
@@ -2278,6 +2281,7 @@ __webpack_require__.r(__webpack_exports__);
       data.append('file', formFile);
       axios.post(url, data, headers).then(function (data) {
         console.log(data.data);
+        _this3.slides = data.data;
       });
     }
   }
@@ -41835,7 +41839,7 @@ var render = function() {
     [
       _c("h1", { staticClass: "zag" }, [_vm._v("Редактирование слайдера")]),
       _vm._v(" "),
-      _vm._l(_vm.slides, function(slide) {
+      _vm._l(_vm.slides, function(slide, index) {
         return _c(
           "form",
           {
@@ -41848,6 +41852,8 @@ var render = function() {
               attrs: { type: "hidden", name: "id" },
               domProps: { value: slide.id }
             }),
+            _vm._v(" "),
+            _c("h2", [_vm._v("Слайд номер " + _vm._s(index + 1))]),
             _vm._v(" "),
             _c("div", { staticClass: "form_item" }, [
               _c("span", { staticClass: "title" }, [_vm._v("text:")]),
@@ -41873,7 +41879,8 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "form_item" }, [
               _c("input", {
-                attrs: { type: "submit", value: "Обновить" },
+                staticClass: "add_slide",
+                attrs: { type: "submit", value: "Обновить слайд" },
                 on: {
                   click: function($event) {
                     return _vm.updata($event, slide.id)
@@ -41886,13 +41893,14 @@ var render = function() {
               _c(
                 "button",
                 {
+                  staticClass: "slide_delete",
                   on: {
                     click: function($event) {
                       return _vm.drop($event, slide.id)
                     }
                   }
                 },
-                [_vm._v("Удалить")]
+                [_vm._v("Удалить слайд")]
               )
             ])
           ]
@@ -41963,6 +41971,7 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "form_item" }, [
               _c("input", {
+                staticClass: "add_slide",
                 attrs: { type: "submit", value: "Добавить" },
                 on: { click: _vm.addSlide }
               })

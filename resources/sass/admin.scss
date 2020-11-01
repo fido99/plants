@@ -18,6 +18,9 @@ body, html {
 	max-width: 500px;
 	min-height: 600px;
 	margin: 0 auto;
+	background: #C5C7C3;
+	padding: 10px;
+	margin-top: 30px;
 } 
 
 .form_item {
@@ -100,4 +103,16 @@ body, html {
 	background: red;
 	max-width: 300px;
 	margin: 0 auto;
+}
+
+.slide_delete, .add_slide {
+	height: 60px;
+}
+
+.add_slide {
+	background: #73E176;
+}
+
+.slide_delete {
+	background: #E1041A;
 }

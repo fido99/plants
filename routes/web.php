@@ -18,9 +18,9 @@ Auth::routes(["register" => false, "forgot" => false, "reset" => false]);
 Route::get('/', 'App\Http\Controllers\HomeController@index');
 
 
-Route::get('/admin', 'App\Http\Controllers\AdminController@index');
-Route::get('/adminSlider', 'App\Http\Controllers\AdminController@slider');
-Route::get('/adminPlants', 'App\Http\Controllers\AdminController@plants');
+Route::get('/admin', 'App\Http\Controllers\AdminController@index')->middleware('auth');
+Route::get('/adminSlider', 'App\Http\Controllers\AdminController@slider')->middleware('auth');
+Route::get('/adminPlants', 'App\Http\Controllers\AdminController@plants')->middleware('auth');
 
 
  

@@ -22,7 +22,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $title = Page::find(1)->values;
+        $title = Page::where('attributes', 'title')->first()->values;
         $slider = Slider::all();
        
         return view('home', ['title' => $title, 'slider' => $slider]);
