@@ -31,6 +31,7 @@ Vue.component('admin-plants-component', require('./components/AdminPlantsCompone
 Vue.component('header-component', require('./components/HeaderComponent.vue').default);
 Vue.component('search-component', require('./components/SearchComponent.vue').default);
 Vue.component('footer-component', require('./components/FooterComponent.vue').default);
+ 
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

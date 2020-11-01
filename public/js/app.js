@@ -2387,9 +2387,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('slider created');
+  created: function created() {
+    var _this = this;
+
+    var url = '/api/slider/get';
+    axios.get(url).then(function (data) {
+      console.log(data.data);
+      _this.slider = data.data;
+    });
+  },
+  data: function data() {
+    return {
+      slider: []
+    };
   }
 });
 
@@ -42093,18 +42109,9 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [_vm._t("default")], 2)
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "owl-carousel slider" }, [
-      _c("div", { staticClass: "item" }, [_vm._v("\n  1\n ")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

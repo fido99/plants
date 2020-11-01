@@ -54,6 +54,11 @@ Route::get('/phone/send', function(Request $request) {
     return response()->json('ok');
 });
 
+Route::get('/slider/get', function() {
+    $data = Slider::all();
+    return $data;
+});
+
 
 Route::post('/adminSlider', function() {
     $data = Slider::all();
