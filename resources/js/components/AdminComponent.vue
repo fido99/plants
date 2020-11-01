@@ -44,6 +44,16 @@
  export default {
    mounted() {
     bkLib.onDomLoaded(nicEditors.allTextAreas);
+    let url = '/api/getPage';
+    axios.get(url)
+     .then((data) => {
+      console.log(data.data);
+      this.title = data.data[0].values;
+      this.email = data.data[1].values;
+      let footer_text_data = document.querySelector('.nicEdit-main').innerHTML;
+      footer_text_data = data.data[3].values;
+     });
+ 
    },
    
    data() {

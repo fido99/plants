@@ -1952,7 +1952,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
+    var _this = this;
+
     bkLib.onDomLoaded(nicEditors.allTextAreas);
+    var url = '/api/getPage';
+    axios.get(url).then(function (data) {
+      console.log(data.data);
+      _this.title = data.data[0].values;
+      _this.email = data.data[1].values;
+      var footer_text_data = document.querySelector('.nicEdit-main').innerHTML;
+      footer_text_data = data.data[3].values;
+    });
   },
   data: function data() {
     return {
@@ -1969,7 +1979,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     update: function update(event) {
-      var _this = this;
+      var _this2 = this;
 
       event.preventDefault();
 
@@ -2002,21 +2012,21 @@ __webpack_require__.r(__webpack_exports__);
       console.log(this.$refs.file.files[0]);
       axios.post(url, data, headers).then(function (data) {
         console.log(data.data);
-        _this.message = 'Данные обновлены';
-        _this.isShow = true;
-        _this.updateTrue = true;
-        _this.updateFalse = false;
+        _this2.message = 'Данные обновлены';
+        _this2.isShow = true;
+        _this2.updateTrue = true;
+        _this2.updateFalse = false;
         setTimeout(function () {
-          return _this.isShow = !_this.isShow;
+          return _this2.isShow = !_this2.isShow;
         }, 2000);
       })["catch"](function (err) {
         console.log(err);
-        _this.message = 'Ошибка';
-        _this.isShow = true;
-        _this.updateFalse = true;
-        _this.updateTrue = false;
+        _this2.message = 'Ошибка';
+        _this2.isShow = true;
+        _this2.updateFalse = true;
+        _this2.updateTrue = false;
         setTimeout(function () {
-          return _this.isShow = !_this.isShow;
+          return _this2.isShow = !_this2.isShow;
         }, 2000);
       });
     },
@@ -2100,6 +2110,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     drop: function drop(event, id) {
+      var _this2 = this;
+
       event.preventDefault();
       console.log(id);
       var url = "/api/admin/plants/delete/".concat(id);
@@ -2108,9 +2120,13 @@ __webpack_require__.r(__webpack_exports__);
         'Content-Type': 'multipart/form-data',
         'X-CSRF-TOKEN': csrf
       };
-      axios.post(url, headers);
+      axios.post(url, headers).then(function (data) {
+        _this2.plants = data.data;
+      });
     },
     add: function add(event) {
+      var _this3 = this;
+
       event.preventDefault();
       var url = "/api/admin/plants/add";
       var csrf = document.querySelector('meta[name=csrf-token]').getAttribute('content');
@@ -2119,7 +2135,9 @@ __webpack_require__.r(__webpack_exports__);
       };
       var form = new FormData();
       form.append('name', this.name);
-      axios.post(url, form, headers);
+      axios.post(url, form, headers).then(function (data) {
+        _this3.plants = data.data;
+      });
     }
   }
 });

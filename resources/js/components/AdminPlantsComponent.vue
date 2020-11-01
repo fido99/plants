@@ -44,7 +44,10 @@
     let url = `/api/admin/plants/delete/${id}`;
     let csrf = document.querySelector('meta[name=csrf-token]').getAttribute('content');
     let headers = {'Content-Type': 'multipart/form-data', 'X-CSRF-TOKEN': csrf};
-    axios.post(url, headers);
+    axios.post(url, headers)
+     .then((data) => {
+      this.plants = data.data;
+     })
    },
 
    add(event) {
@@ -54,7 +57,10 @@
     let headers = {'X-CSRF-TOKEN': csrf};
     let form = new FormData();
     form.append('name', this.name);
-    axios.post(url, form, headers);
+    axios.post(url, form, headers)
+     .then((data) => {
+      this.plants = data.data;
+     })
    }
   }
  }

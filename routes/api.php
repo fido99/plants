@@ -113,11 +113,12 @@ Route::post('/admin/plants', function(Request $request) {
 Route::post('/admin/plants/delete/{id}', function($id) {
 	$deletePlant = Plants::find($id);
 	$deletePlant->delete();
-    return 'ok';
+    return Plants::all();
 });
 
 Route::post('/admin/plants/add', function(Request $request) {
      $newPlant = new Plants();
      $newPlant->name = $request->input('name');
      $newPlant->save();
+     return Plants::all();
 });
