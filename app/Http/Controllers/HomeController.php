@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Page;
-
+use App\Models\Slider;
 
 class HomeController extends Controller
 {
@@ -23,7 +23,8 @@ class HomeController extends Controller
     public function index()
     {
         $title = Page::find(1)->values;
+        $slider = Slider::all();
        
-        return view('home', ['title' => $title]);
+        return view('home', ['title' => $title, 'slider' => $slider]);
     }
 }

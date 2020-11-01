@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Page;
 use App\Models\Slider;
 use App\Models\Plants;
-
+ 
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,7 +23,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/updata', function(Request $request) {
-	Storage::put('/images/', $request->file('file'));
+	$filename = Storage::put('/public/', $request->file('file'));
 
 	$title = Page::find(1);
 	$title->values = $request->input('title');
@@ -34,7 +34,7 @@ Route::post('/updata', function(Request $request) {
 	$email->save();
 
 	$logo = Page::find(3);
-	$logo->values = $request->file('file')->getClientOriginalName();
+	$logo->values = basename($filename);
 	$logo->save();
 
 	$footer_text = Page::find(4);
@@ -50,8 +50,13 @@ Route::get('/getPage', function() {
     return response()->json($data);	
 });
 
-Route::get('/phone/send', function(Request $request) {
-    return response()->json('ok');
+Route::post('/phone/send', function(Request $request) {
+    Mail::send(['text' => 'mail'], ['phone' => $request->input('phone')], function($message) {
+        $message->to('olegf5241@gmail.com')->subject('test');
+        $message->from('olegf5241@gmail.com', 'test');
+    });
+    
+    return 'ok';
 });
 
 Route::get('/slider/get', function() {
@@ -66,9 +71,10 @@ Route::post('/adminSlider', function() {
 });
 
 Route::post('/adminSlider/updata', function(Request $request) {
+    $filename = Storage::putFile('/public/', $request->file('file'));
     $slide = Slider::find($request->input('id'));
     $slide->text = $request->input('text');
-    $slide->image = $request->file('file')->getClientOriginalName();
+    $slide->image = basename($filename);
     $slide->link = $request->input('link');
     $slide->save();
 
@@ -84,19 +90,20 @@ Route::post('/adminSlider/delete', function(Request $request) {
 });
 
 Route::post('/adminSlider/add', function(Request $request) {
+    $filename = Storage::putFile('/public/', $request->file('file'));
     $slide = new Slider();
     $slide->text = $request->input('text');
     $slide->link = $request->input('link');
-    $slide->image = $request->file('file')->getClientOriginalName();
+    $slide->image = basename($filename);
     $slide->save(); 
 });
 
 
 
 // ********* plants routes ********* 
-Route::post('/admin/plants', function() {
-    $plants = Plants::all();
-    return Plants::all();     
+Route::post('/admin/plants', function(Request $request) {
+    $plants = Plants::where('name', 'LIKE', '%' . $request->input('name') . '%')->get();
+    return $plants;     
 });
 
 Route::post('/admin/plants/delete/{id}', function($id) {

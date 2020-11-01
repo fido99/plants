@@ -8,7 +8,7 @@ require('./bootstrap');
 
 import Vue from 'vue';
 import $ from 'jquery';
-
+ 
 require('owl.carousel');
  
 
@@ -31,7 +31,7 @@ Vue.component('admin-plants-component', require('./components/AdminPlantsCompone
 Vue.component('header-component', require('./components/HeaderComponent.vue').default);
 Vue.component('search-component', require('./components/SearchComponent.vue').default);
 Vue.component('footer-component', require('./components/FooterComponent.vue').default);
- 
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -39,12 +39,15 @@ Vue.component('footer-component', require('./components/FooterComponent.vue').de
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+ 
 $(document).ready(function() {
  $('.owl-carousel').owlCarousel({
   loop: true,
   items: 1
  });
 });
+
+ 
 
 const app = new Vue({
  el: '#app',
@@ -56,9 +59,13 @@ const app = new Vue({
   send(event) {
    event.preventDefault();
    let url = '/api/phone/send';
-   let data = new FormData();
-   data.append('pahone', this.tel);
-   axios.get(url, data)
+   let dataForm = new FormData();
+   let csrf = document.querySelector('meta[name=csrf-token]').getAttribute('content');
+   let headers = {
+    'X-CSRF-TOKEN': csrf
+   }
+   dataForm.append('phone', this.tel);
+   axios.post(url, dataForm, headers)
     .then((data) => {
      console.log(data.data);
     });

@@ -3,7 +3,7 @@
   <div class="wrapper">
    <div class="panel_header_top">
     <div class="logotype_block">
-     <img src="/storage/images/page/logo.png" alt="error">
+     <img v-bind:src="'/storage/' + this.logo" alt="error">
     </div>
     <div class="line"></div>
     <div class="email_block">

@@ -159,3 +159,32 @@ input.tel_area {
     cursor: pointer;
 	font-weight: bold;
 }
+
+.slider h1, h2, h3 {
+	margin: 0;
+	padding: 0;
+}
+
+.item_slide_text {
+	padding: 140px;
+}
+
+.form_searc {
+	margin-top: 50px;
+}
+
+.footer_zag {
+	font-size: 30px;
+	text-align: center;
+	margin-top: 100px;
+}
+
+.footer_text {
+	min-height: 200px;
+}
+
+@media screen and (max-width: 500px) {
+	.modal_block {
+	 width: 50vh;
+	}
+}

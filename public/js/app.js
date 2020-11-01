@@ -2279,7 +2279,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
+    var _this = this;
+
     console.log('slider created');
+    var url = '/api/getPage';
+    axios.get('/api/getPage').then(function (data) {
+      _this.footer = data.data[3].values;
+    });
+  },
+  data: function data() {
+    return {
+      footer: ''
+    };
   }
 });
 
@@ -2361,10 +2372,40 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      plants: [{
-        name: 'palnts'
-      }]
+      plants: [],
+      search: ''
     };
+  },
+  watch: {
+    search: function search(newVal) {
+      this.fetch();
+      console.log(newVal);
+    }
+  },
+  methods: {
+    fetch: function fetch() {
+      var _this = this;
+
+      if (this.search.length == 0) {
+        this.plants = [];
+        return;
+      }
+
+      var url = '/api/admin/plants';
+      var csrf = document.querySelector('meta[name=csrf-token]').getAttribute('content');
+      var headers = {
+        'Content-Type': 'multipart/form-data',
+        'X-CSRF-TOKEN': csrf
+      };
+      var formData = new FormData();
+      formData.append('name', this.search);
+      axios.post(url, formData).then(function (data) {
+        console.log(data.data);
+        _this.plants = data.data;
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    }
   }
 });
 
@@ -2392,20 +2433,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+// import carousel from 'vue-owl-carousel';
 /* harmony default export */ __webpack_exports__["default"] = ({
-  created: function created() {
-    var _this = this;
-
-    var url = '/api/slider/get';
-    axios.get(url).then(function (data) {
-      console.log(data.data);
-      _this.slider = data.data;
-    });
+  // components: { carousel },
+  props: ['urldata'],
+  mounted: function mounted() {
+    console.log(this.urldata);
+    this.slider = this.urldata;
   },
   data: function data() {
     return {
       slider: []
     };
+  },
+  methods: {
+    showSlide: function showSlide() {
+      console.log(this.urldata);
+    }
   }
 });
 
@@ -41955,20 +41999,16 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("footer", { staticClass: "wrapper" }, [
+    _c("h3", { staticClass: "footer_zag" }, [_vm._v("footer text:")]),
+    _vm._v(" "),
+    _c("div", {
+      staticClass: "footer_text",
+      domProps: { innerHTML: _vm._s(_vm.footer) }
+    })
+  ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("footer", { staticClass: "wrapper" }, [
-      _c("h3", [_vm._v("footer")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "footer_text" })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -41993,7 +42033,9 @@ var render = function() {
   return _c("header", [
     _c("div", { staticClass: "wrapper" }, [
       _c("div", { staticClass: "panel_header_top" }, [
-        _vm._m(0),
+        _c("div", { staticClass: "logotype_block" }, [
+          _c("img", { attrs: { src: "/storage/" + this.logo, alt: "error" } })
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "line" }),
         _vm._v(" "),
@@ -42020,18 +42062,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "logotype_block" }, [
-      _c("img", {
-        attrs: { src: "/storage/images/page/logo.png", alt: "error" }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -42053,10 +42084,39 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "wrapper" }, [
+  return _c("div", { staticClass: "wrapper form_searc" }, [
     _c("h3", { staticClass: "search_zag" }, [_vm._v("Поиск:")]),
     _vm._v(" "),
-    _vm._m(0),
+    _c(
+      "form",
+      {
+        staticClass: "form_search_block",
+        attrs: { action: "", method: "POST" }
+      },
+      [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.search,
+              expression: "search"
+            }
+          ],
+          staticClass: "text_input",
+          attrs: { type: "text", name: "search", placeholder: "search" },
+          domProps: { value: _vm.search },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.search = $event.target.value
+            }
+          }
+        })
+      ]
+    ),
     _vm._v(" "),
     _c(
       "ul",
@@ -42068,26 +42128,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "form",
-      {
-        staticClass: "form_search_block",
-        attrs: { action: "", method: "POST" }
-      },
-      [
-        _c("input", {
-          staticClass: "text_input",
-          attrs: { type: "text", name: "search", placeholder: "search" }
-        })
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -42109,7 +42150,31 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._t("default")], 2)
+  return _c(
+    "div",
+    { staticClass: "owl-carousel slider" },
+    _vm._l(_vm.slider, function(slide) {
+      return _c(
+        "div",
+        {
+          staticClass: "item",
+          style: {
+            "background-size": "cover",
+            backgroundImage: "url(/storage/" + slide.image + ")"
+          }
+        },
+        [
+          _c("div", { staticClass: "item_slide_text" }, [
+            _c("h1", {
+              staticStyle: { color: "#fff" },
+              domProps: { textContent: _vm._s(slide.text) }
+            })
+          ])
+        ]
+      )
+    }),
+    0
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -54345,9 +54410,13 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     send: function send(event) {
       event.preventDefault();
       var url = '/api/phone/send';
-      var data = new FormData();
-      data.append('pahone', this.tel);
-      axios.get(url, data).then(function (data) {
+      var dataForm = new FormData();
+      var csrf = document.querySelector('meta[name=csrf-token]').getAttribute('content');
+      var headers = {
+        'X-CSRF-TOKEN': csrf
+      };
+      dataForm.append('phone', this.tel);
+      axios.post(url, dataForm, headers).then(function (data) {
         console.log(data.data);
       });
     }
