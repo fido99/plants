@@ -94,3 +94,9 @@ html {
   text-transform: uppercase;
 }
 
+.errors_block {
+  background: red;
+  max-width: 300px;
+  margin: 0 auto;
+}
+

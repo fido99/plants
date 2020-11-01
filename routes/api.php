@@ -23,7 +23,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/updata', function(Request $request) {
-	$filename = Storage::put('/public/', $request->file('file'));
+    if ($request->hasFile('file')) {
+        $filename = Storage::put('/public/', $request->file('file'));
+        $logo = Page::find(3);
+        $logo->values = basename($filename);
+        $logo->save();
+    }
+ 
 
 	$title = Page::find(1);
 	$title->values = $request->input('title');
@@ -33,9 +39,6 @@ Route::post('/updata', function(Request $request) {
 	$email->values = $request->input('email');
 	$email->save();
 
-	$logo = Page::find(3);
-	$logo->values = basename($filename);
-	$logo->save();
 
 	$footer_text = Page::find(4);
 	$footer_text->values = $request->input('footer_text');
@@ -52,11 +55,12 @@ Route::get('/getPage', function() {
 
 Route::post('/phone/send', function(Request $request) {
     Mail::send(['text' => 'mail'], ['phone' => $request->input('phone')], function($message) {
-        $message->to('olegf5241@gmail.com')->subject('test');
+        $mail = Page::where('id', '2')->first()->values;
+        $message->to($mail)->subject('test');
         $message->from('olegf5241@gmail.com', 'test');
     });
     
-    return 'ok';
+     
 });
 
 Route::get('/slider/get', function() {

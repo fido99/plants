@@ -14,7 +14,7 @@
   <div class="modal_block" v-show="isModal">
    <form action="" method="POST" class="send_tell_from">
    	<span class="hide" v-on:click="isModal = !isModal">x</span>
-    <h3>Заказать звонок</h3>
+    <h3 v-text="isSend"></h3>
     <input type="tel" name="phone" class="tel_area" placeholder="Телефон" v-model="tel">
     <input type="submit" class="send" v-on:click="send">
    </form>

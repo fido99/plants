@@ -1948,6 +1948,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     bkLib.onDomLoaded(nicEditors.allTextAreas);
@@ -1960,7 +1962,9 @@ __webpack_require__.r(__webpack_exports__);
       isShow: false,
       updateTrue: false,
       updateFalse: false,
-      message: ''
+      message: '',
+      errors: [],
+      isError: false
     };
   },
   methods: {
@@ -1968,6 +1972,19 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       event.preventDefault();
+
+      if (this.errors.length) {
+        this.errors = [];
+        this.isError = false;
+      }
+
+      this.validate();
+
+      if (this.errors.length > 0) {
+        console.log(this.errors);
+        return;
+      }
+
       var footer_text_data = document.querySelector('.nicEdit-main').innerHTML;
       this.footerText = footer_text_data;
       console.log(footer_text_data);
@@ -2002,6 +2019,30 @@ __webpack_require__.r(__webpack_exports__);
           return _this.isShow = !_this.isShow;
         }, 2000);
       });
+    },
+    validateEmail: function validateEmail(email) {
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    },
+    validate: function validate() {
+      var footer_text = document.querySelector('.nicEdit-main').innerHTML;
+      console.log('text = ' + footer_text);
+
+      if (!this.title) {
+        this.errors.push('Введите title');
+      }
+
+      if (!this.validateEmail(this.email)) {
+        this.errors.push('Введите коректный email');
+      }
+
+      if (!footer_text) {
+        this.errors.push('Введите footer text');
+      }
+
+      if (this.errors.length) {
+        this.isError = true;
+      }
     }
   },
   watch: {}
@@ -41517,6 +41558,20 @@ var render = function() {
       _vm._v("Редактировать список растений")
     ]),
     _vm._v(" "),
+    _vm.isError
+      ? _c("div", { staticClass: "errors_block" }, [
+          _c("p", [_vm._v("Ошибка исправте:")]),
+          _vm._v(" "),
+          _c(
+            "ul",
+            _vm._l(_vm.errors, function(error) {
+              return _c("li", { domProps: { textContent: _vm._s(error) } })
+            }),
+            0
+          )
+        ])
+      : _vm._e(),
+    _vm._v(" "),
     _c(
       "form",
       {
@@ -41556,9 +41611,7 @@ var render = function() {
                 _vm.title = $event.target.value
               }
             }
-          }),
-          _vm._v(" "),
-          _c("span", { staticClass: "error" }, [_vm._v("error")])
+          })
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "form_item" }, [
@@ -41589,9 +41642,7 @@ var render = function() {
                 _vm.email = $event.target.value
               }
             }
-          }),
-          _vm._v(" "),
-          _c("span", { staticClass: "error" }, [_vm._v("error")])
+          })
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "form_item" }, [
@@ -41606,9 +41657,7 @@ var render = function() {
               accept: ".jpg, .jpeg, .png",
               multiple: ""
             }
-          }),
-          _vm._v(" "),
-          _c("span", { staticClass: "error" }, [_vm._v("error")])
+          })
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "form_item form_textarea" }, [
@@ -41634,9 +41683,7 @@ var render = function() {
                 _vm.footerText = $event.target.value
               }
             }
-          }),
-          _vm._v(" "),
-          _c("span", { staticClass: "error" }, [_vm._v("error")])
+          })
         ]),
         _vm._v(" "),
         _c("input", {
@@ -54404,10 +54451,13 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app',
   data: {
     isModal: false,
-    tel: ''
+    tel: '',
+    isSend: 'Заказать звонок'
   },
   methods: {
     send: function send(event) {
+      var _this = this;
+
       event.preventDefault();
       var url = '/api/phone/send';
       var dataForm = new FormData();
@@ -54417,7 +54467,9 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
       };
       dataForm.append('phone', this.tel);
       axios.post(url, dataForm, headers).then(function (data) {
-        console.log(data.data);
+        console.log(_this.isSend);
+        _this.isSend = 'Данные отправлены';
+        console.log(_this.isSend);
       });
     }
   }

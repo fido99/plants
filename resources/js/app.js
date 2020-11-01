@@ -53,7 +53,8 @@ const app = new Vue({
  el: '#app',
  data: {
   isModal: false,
-  tel: ''
+  tel: '',
+  isSend: 'Заказать звонок'
  },
  methods: {
   send(event) {
@@ -67,7 +68,9 @@ const app = new Vue({
    dataForm.append('phone', this.tel);
    axios.post(url, dataForm, headers)
     .then((data) => {
-     console.log(data.data);
+      console.log(this.isSend);
+      this.isSend = 'Данные отправлены';
+      console.log(this.isSend);
     });
   }
  }
